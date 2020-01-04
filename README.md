@@ -1,5 +1,7 @@
 # GURUGURU
 
+![Logo](src/res/logo64.png)
+
 GURUGURU is a realtime translating extension for YouTube LiveChat. 
 
 ## Usage
