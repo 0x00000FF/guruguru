@@ -62,8 +62,6 @@ let translate = (btn) => {
         "text": txtElem.innerText
     };
 
-    console.log(reqData);
-    
     request("POST", apiBase, 
             JSON.stringify(reqData),
             (data) => {
@@ -82,7 +80,7 @@ let translate = (btn) => {
     const config = { attributes: false, childList: true, subtree: true };
     const callback = (list, obs) => {
         let extractTarget;
-        
+
         for (let entity of list) {
             if (entity.type !== "childList") continue;
             let target = entity.target;
