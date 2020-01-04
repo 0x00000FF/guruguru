@@ -7,22 +7,17 @@
  * 
  */
 
-const apiBase = (svc) => 
-    "https://openapi.naver.com/v1/papago/" + svc;
-
+const apiBase = "https://ppgmed.patche.me/translate.php";
 
 let apiId  = "";
 let apiKey = "";
+let destLang = "ja";
 
 let request = (method, url, data, done) => {
     
     var xhr = new XMLHttpRequest();
 
     xhr.open(method, url);
-
-    xhr.setRequestHeader("X-Naver-Client-Id", apiId);
-    xhr.setRequestHeader("X-Naver-Client-Secret", apiKey);
-    xhr.setRequestHeader("Content-Type", "jsonp");
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === xhr.DONE) {
@@ -32,28 +27,53 @@ let request = (method, url, data, done) => {
         }
     }
 
+
     xhr.send(data);
 };
+
+/* need to be refactored */
+let swap = (txtElem) => {
+    if (txtElem.hasAttribute("original")) {
+        txtElem.setAttribute("translated", txtElem.innerText);
+        txtElem.innerText = txtElem.getAttribute("original");
+        
+        txtElem.removeAttribute("original");
+        return true;
+    }
+
+    if (txtElem.hasAttribute("translated")) {
+        txtElem.setAttribute("original", txtElem.innerText);
+        txtElem.innerText = txtElem.getAttribute("translated");
+        
+        txtElem.removeAttribute("translated");
+        return true;
+    }
+}
 
 let translate = (btn) => {
     const txtElem = btn.toElement;
 
-    let srcLang = ""; 
-    let dstLang = "ja";
+    if (swap(txtElem)) return;
+
+    let reqData = {
+        "api_id": apiId,
+        "api_key": apiKey,
+        "dest_lang": destLang,
+        "text": txtElem.innerText
+    };
+
+    console.log(reqData);
     
-    request("POST", apiBase("detectLangs"), 
-            "query=" + txtElem.innerText,
+    request("POST", apiBase, 
+            JSON.stringify(reqData),
             (data) => {
-                srcLang = data.langCode;
-                request("POST", apiBase("n2mt"),
-                         "source=" + srcLang +
-                         "&target=" + dstLang +  
-                         "&text=" + txtElem.innerText,
-                         (data) => {
-                             txtElem.innerHTML = data.message
-                                                     .result
-                                                     .translatedText;
-                         });
+                let ttext = JSON.parse(data)
+                                .message
+                                .result
+                                .translatedText;
+
+                txtElem.setAttribute("original", txtElem.innerText);
+                txtElem.innerText = ttext;
             });
 };
 
