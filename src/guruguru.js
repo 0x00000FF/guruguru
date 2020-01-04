@@ -7,14 +7,11 @@
  * 
  */
 
-const apiBase = "https://ppgmed.patche.me/translate.php";
+ /* this variables will be set after setting is loaded */
+let apiBase, apiId, apiKey, destLang;
 
-let apiId  = "";
-let apiKey = "";
-let destLang = "ja";
-
-let request = (method, url, data, done) => {
-    
+ /* XMLHttpRequest utility function */
+const request = (method, url, data, done) => {
     var xhr = new XMLHttpRequest();
 
     xhr.open(method, url);
@@ -27,11 +24,11 @@ let request = (method, url, data, done) => {
         }
     }
 
-
     xhr.send(data);
 };
 
-let swap = (txtElem) => {
+ /* swap with original/translated text */ 
+const swap = (txtElem) => {
     if (txtElem.hasAttribute("swap-text")) {
         let tmp = txtElem.innerText;
         txtElem.innerText = txtElem.getAttribute("swap-text");
@@ -41,7 +38,8 @@ let swap = (txtElem) => {
     }
 }
 
-let translate = (btn) => {
+ /* request translation */
+const translate = (btn) => {
     const txtElem = btn.toElement;
 
     if (swap(txtElem)) return;
@@ -66,6 +64,7 @@ let translate = (btn) => {
             });
 };
 
+ /* begin observer */
 (function () {
     const targetNode = document.querySelector("yt-live-chat-item-list-renderer #contents #item-scroller");
     const config = { attributes: false, childList: true, subtree: true };
@@ -91,4 +90,29 @@ let translate = (btn) => {
 
     const chatObserver = new MutationObserver(callback);
     chatObserver.observe(targetNode, config);
+
+    /* Load setting data */
+    chrome.storage.sync.get({
+        "api_base": "https://ppgmed.patche.me/translate.php",
+        "api_id": "",
+        "api_key": "",
+        "dest_lang": "ko",
+    }, (data) => {
+        if (data.api_base.length !== 0) {
+            apiBase = data.api_base;
+        }
+
+        if (data.api_id.length !== 0) {
+            apiId = data.api_id;
+        } 
+        
+        if (data.api_key.length !== 0) {
+            apiKey = data.api_key;
+        }
+
+        if (data.dest_lang.length !== 0) {
+            destLang = data.dest_lang;
+        }
+    });
 })();
+
