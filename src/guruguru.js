@@ -82,13 +82,15 @@ let translate = (btn) => {
     const config = { attributes: false, childList: true, subtree: true };
     const callback = (list, obs) => {
         let extractTarget;
-
+        
         for (let entity of list) {
             if (entity.type !== "childList") continue;
             let target = entity.target;
 
             if (target.id === "message" 
-                && target.className === "style-scope yt-live-chat-text-message-renderer") {
+                && ( target.className === "style-scope yt-live-chat-text-message-renderer"
+                     || target.className === "style-scope yt-live-chat-paid-message-renderer")
+               ) {
                 extractTarget = target;
                 break;
             }
