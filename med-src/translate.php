@@ -41,11 +41,14 @@
         ));
      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
     
-     return curl_exec($curl);
+     $content = curl_exec($curl);
+     curl_close($curl);
+
+     return $content;
  }
 
  $detectlang_data = "query=" . $request_obj->text;
- $response = json_encode( request_curl("detectLangs", $detectlang_data) );
+ $response = json_decode( request_curl("detectLangs", $detectlang_data) );
 
  $src = $response->langCode;
  $dst = $request_obj->dest_lang;
