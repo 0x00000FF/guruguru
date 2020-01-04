@@ -31,21 +31,12 @@ let request = (method, url, data, done) => {
     xhr.send(data);
 };
 
-/* need to be refactored */
 let swap = (txtElem) => {
-    if (txtElem.hasAttribute("original")) {
-        txtElem.setAttribute("translated", txtElem.innerText);
-        txtElem.innerText = txtElem.getAttribute("original");
+    if (txtElem.hasAttribute("swap-text")) {
+        let tmp = txtElem.innerText;
+        txtElem.innerText = txtElem.getAttribute("swap-text");
         
-        txtElem.removeAttribute("original");
-        return true;
-    }
-
-    if (txtElem.hasAttribute("translated")) {
-        txtElem.setAttribute("original", txtElem.innerText);
-        txtElem.innerText = txtElem.getAttribute("translated");
-        
-        txtElem.removeAttribute("translated");
+        txtElem.setAttribute("swap-text", tmp);
         return true;
     }
 }
@@ -70,7 +61,7 @@ let translate = (btn) => {
                                 .result
                                 .translatedText;
 
-                txtElem.setAttribute("original", txtElem.innerText);
+                txtElem.setAttribute("swap-text", txtElem.innerText);
                 txtElem.innerText = ttext;
             });
 };
