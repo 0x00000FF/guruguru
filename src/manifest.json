@@ -4,10 +4,13 @@
       "manifest_version": 2,
     
       "name": "Guruguru",
-      "description": "",
+      "description": "Realtime Translating Extension for YouTube Streaming LiveChat",
       "version": "1.0",
-    
-      "icons": { "48": "Resources/48.png"  },
+      "icons": { 
+            "32": "res/logo32.png", 
+            "48": "res/logo48.png",
+            "64": "res/logo64.png"
+       },
       "permissions": [
         "storage"
       ],
@@ -18,17 +21,17 @@
           "js": [
             "guruguru.js"
           ],
-          "default_icon": "Resources/48.png"
+          "default_icon": "res/logo48.png"
         }
       ],
     
       "browser_action":
         {
-          "default_icon": {"48": "Resources/48.png"}
+          "default_icon": { "48": "res/logo48.png" }
         },
     
         "options_ui": {
-          "page": "Control/Control-panel.html",
+          "page": "control/control.html",
           "chrome_style": true
         }
     }
