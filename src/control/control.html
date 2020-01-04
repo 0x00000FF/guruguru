@@ -1,0 +1,70 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      label
+      {
+        display: block;
+        font-weight: bold;
+        margin: 15px 0px;
+      }
+
+      input {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+      }
+
+      a {
+          text-decoration: none;
+      }
+        
+      #SaveButton
+      {
+        display: block;
+        background: #000000;
+        color: #ffffff;
+        line-height: 40px;
+        width: 100%;
+        text-align: center;
+        margin: 10px 0px;
+        cursor: pointer;
+        text-decoration: none;
+      }
+      #SaveButton:hover
+      {
+        background: #323232;
+      }
+      #SaveButton:active
+      {
+        background: #101010;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="ControlArea">
+      <label>
+        Mediator Endpoint
+        <input id="ApiBase" type="text" />
+      </label>
+      <p>Change it if you have your own mediator server. <br />
+        You can get the source code from <a href="https://github.com/0x00000FF/guruguru" target="_blank">here</a>.</p>
+      <label>
+        API ID
+        <input id="ApiID" type="text" />
+      </label>
+      <label>
+        API Key
+        <input id="ApiKey" type="password" />
+      </label>
+      <p>Please input API ID and Key from <a href="https://developers.naver.com/apps/#/register">Naver Papago API</a>.</p>
+      <label>
+        Target Language
+        <input id="DestLang" type="text" />
+      </label>
+      <p>You can find the available language codes from <a href="https://developers.naver.com/docs/papago/papago-nmt-api-reference.md" target="_blank">here</a>.</p>
+    </div>
+    <a id="SaveButton">Save</a>
+    <script type="text/javascript" src="control.js"></script>
+  </body>
+</html>
