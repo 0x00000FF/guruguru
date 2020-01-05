@@ -16,7 +16,7 @@ const request = (url, data, done) => {
 
     xhr.open("POST", url);
 
-    xhr.onreadystatechange = function () {
+    xhr.onreadystatechange = () => {
         if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200 || xhr.status === 201) {
                 done(xhr.responseText);
@@ -42,7 +42,9 @@ const swap = (txtElem) => {
 const translate = (btn) => {
     const txtElem = btn.toElement;
 
-    if (swap(txtElem)) return;
+    if (swap(txtElem)) {
+        return;
+    }
 
     let reqData = {
         "api_id": apiId,
@@ -72,7 +74,10 @@ const translate = (btn) => {
         let extractTarget;
 
         for (let entity of list) {
-            if (entity.type !== "childList") continue;
+            if (entity.type !== "childList") {
+                continue;
+            }
+
             let target = entity.target;
 
             if (target.id === "message" 
