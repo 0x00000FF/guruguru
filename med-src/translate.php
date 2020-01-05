@@ -10,7 +10,22 @@
  * This PHP file mediates API request/response between
  * guruguru extension and Naver Papago API.
  * 
- */
+ * -----------------------------------------------------------------------------
+ *
+ * Mediator API Specification
+ * 
+ * Request (JSON, POST)
+ *   - api_id    [string]  Client ID
+ *   - api_key   [string]  Client Secret
+ *   - text      [string]  
+ *   - dest_lang [string]
+ * 
+ * Response (application/json)
+ *   Refer https://developers.naver.com/docs/papago/papago-nmt-api-reference.md
+ * 
+ * Error
+ *   When not valid JSON, returns with status code 400
+ */ 
 
  $request = file_get_contents("php://input");
  $request_obj = json_decode($request);
