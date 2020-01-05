@@ -4,13 +4,29 @@
  * 
  * Copyright (c) 2020 P.Knowledge (0x00000FF) and contributors
  * Licensed under MIT License.
- * 
  */
 
- /* this variables will be set after setting is loaded */
+ /* 
+  * These variables will be set after the setting is loaded 
+  * 
+  * apiBase  : URL to mediator endpoint
+  * apiId    : Naver Developer API Client ID
+  * apiKey   : Naver Developer API Client Secret
+  * destLang : Target language code
+  * 
+  * Please refer https://developers.naver.com/docs/papago/
+  * to get more information about Client ID/Secret and language codes.
+  */
 let apiBase, apiId, apiKey, destLang;
 
- /* XMLHttpRequest utility function */
+/*
+ * XMLHttpRequest utility procedure
+ * Only requests with method POST.
+ * 
+ * url : url to request
+ * data: data to send
+ * done: callback procedure that takes an argument
+ */
 const request = (url, data, done) => {
     var xhr = new XMLHttpRequest();
 
@@ -27,7 +43,14 @@ const request = (url, data, done) => {
     xhr.send(data);
 };
 
- /* swap with original/translated text */ 
+/*
+ * Text swapping function
+ * 
+ * txtElem : HTMLElement that swap takes place
+ * 
+ * returns true when swapping succeeded, 
+ * otherwise returns false
+ */
 const swap = (txtElem) => {
     if (txtElem.hasAttribute("swap-text")) {
         let tmp = txtElem.innerText;
@@ -36,9 +59,16 @@ const swap = (txtElem) => {
         txtElem.setAttribute("swap-text", tmp);
         return true;
     }
+
+    return false;
 }
 
- /* request translation */
+/*
+ * Translation procedure
+ * Intended to work as click handler
+ * 
+ * btn : DOM click event argument
+ */
 const translate = (btn) => {
     const txtElem = btn.toElement;
 
@@ -66,7 +96,9 @@ const translate = (btn) => {
             });
 };
 
- /* begin observer */
+/*
+ * Text swapping function
+ */
 (function () {
     const targetNode = document.querySelector("yt-live-chat-item-list-renderer #contents #item-scroller");
     const config = { attributes: false, childList: true, subtree: true };
