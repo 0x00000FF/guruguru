@@ -15,7 +15,7 @@
  $request = file_get_contents("php://input");
  $request_obj = json_decode($request);
 
- if ($request == NULL) {
+ if ($request_obj == NULL) {
     http_response_code(400); 
     exit;
  }
