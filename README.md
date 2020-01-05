@@ -5,6 +5,9 @@
 GURUGURU is a translation helper extension for YouTube LiveChat. 
 
 ## Usage
+
+![Example](doc/example.gif)
+
  * You just click on the desired message, then GURUGURU will translate the message for you.
  * When you need to see original text again, click it again!
  * It surely supports SuperChat!
