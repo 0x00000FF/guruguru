@@ -11,10 +11,10 @@
 let apiBase, apiId, apiKey, destLang;
 
  /* XMLHttpRequest utility function */
-const request = (method, url, data, done) => {
+const request = (url, data, done) => {
     var xhr = new XMLHttpRequest();
 
-    xhr.open(method, url);
+    xhr.open("POST", url);
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState === xhr.DONE) {
@@ -51,7 +51,7 @@ const translate = (btn) => {
         "text": txtElem.innerText
     };
 
-    request("POST", apiBase, 
+    request(apiBase, 
             JSON.stringify(reqData),
             (data) => {
                 let ttext = JSON.parse(data)
