@@ -102,7 +102,7 @@ const translate = (btn) => {
 };
 
 /*
- * Text swapping function
+ * Observer attach procedure begin
  */
 (function () {
     const targetNode = document.querySelector("yt-live-chat-item-list-renderer #contents #item-scroller");
