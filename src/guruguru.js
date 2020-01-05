@@ -20,27 +20,33 @@
 let apiBase, apiId, apiKey, destLang;
 
 /*
- * XMLHttpRequest utility procedure
+ * XMLHttpRequest utility function
  * Only requests with method POST.
  * 
  * url : url to request
  * data: data to send
  * done: callback procedure that takes an argument
+ * 
+ * returns Promise object for the asynchronous XHR
  */
-const request = (url, data, done) => {
-    var xhr = new XMLHttpRequest();
+const request = (url, data) => {
+    return new Promise( 
+        (resolve, reject) => {
+            var xhr = new XMLHttpRequest();
 
-    xhr.open("POST", url);
-
-    xhr.onreadystatechange = () => {
-        if (xhr.readyState === xhr.DONE) {
-            if (xhr.status === 200 || xhr.status === 201) {
-                done(xhr.responseText);
+            xhr.open("POST", url);        
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === xhr.DONE) {
+                    if (xhr.status === 200 || xhr.status === 201) {
+                        resolve(xhr.responseText);
+                    } else {
+                        reject();
+                    }
+                }
             }
-        }
-    }
-
-    xhr.send(data);
+        
+            xhr.send(data);
+        });
 };
 
 /*
@@ -83,17 +89,16 @@ const translate = (btn) => {
         "text": txtElem.innerText
     };
 
-    request(apiBase, 
-            JSON.stringify(reqData),
-            (data) => {
-                let ttext = JSON.parse(data)
-                                .message
-                                .result
-                                .translatedText;
+    request(apiBase, JSON.stringify(reqData))
+        .then((data) => {
+            let ttext = JSON.parse(data)
+                            .message
+                            .result
+                            .translatedText;
 
-                txtElem.setAttribute("swap-text", txtElem.innerText);
-                txtElem.innerText = ttext;
-            });
+            txtElem.setAttribute("swap-text", txtElem.innerText);
+            txtElem.innerText = ttext;
+        });
 };
 
 /*
